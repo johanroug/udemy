@@ -16,17 +16,11 @@ export class AppComponent implements OnInit{
   }
 
   getData() {
-    /*this.names = this.dataService.getData();*/
-
-    this.dataService.nameUpdated.subscribe( // 03: lytter på ændringer
-      (data) => {
-        this.names = data;
-      }
-    );
+    this.names = this.dataService.getData();
   }
 
   addData() {
-    this.dataService.setData("Otto");  // tilføjer ny string
+    this.dataService.setData("Otto");
   }
 
 }
