@@ -1,32 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import {DataserviceService} from "./dataservice.service";
+import {DataService} from "./data.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit{
-  names = [];
+  public names: Array<string> = [];
 
-  constructor(private dataService: DataserviceService) {
+  constructor(private dataService: DataService) {}
 
-  }
   ngOnInit() {
-    this.getData();
-  }
-
-  getData() {
-    /*this.names = this.dataService.getData();*/
-
-    this.dataService.nameUpdated.subscribe( // 03: lytter på ændringer
-      (data) => {
-        this.names = data;
-      }
-    );
+    this.dataService.names.subscribe(
+      data => {
+        this.names = data
+      });
   }
 
   addData() {
-    this.dataService.setData("Otto");  // tilføjer ny string
+    this.names.push("Otto")
+    this.dataService.names.next( this.names );
   }
 
 }
