@@ -1,27 +1,32 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataserviceService} from "./dataservice.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
-  serverElements = [];
-  newServerName = '';
-  newServerContent = '';
+export class AppComponent implements OnInit{
+  names = [];
 
-  onAddServer() {
-    this.serverElements.push({
-      type: 'server',
-      name: this.newServerName,
-      content: this.newServerContent
-    });
+  constructor(private dataService: DataserviceService) {
+
+  }
+  ngOnInit() {
+    this.getData();
   }
 
-  onAddBlueprint() {
-    this.serverElements.push({
-      type: 'blueprint',
-      name: this.newServerName,
-      content: this.newServerContent
-    });
+  getData() {
+    /*this.names = this.dataService.getData();*/
+
+    this.dataService.nameUpdated.subscribe( // 03: lytter på ændringer
+      (data) => {
+        this.names = data;
+      }
+    );
   }
+
+  addData() {
+    this.dataService.setData("Otto");  // tilføjer ny string
+  }
+
 }
